@@ -44,16 +44,16 @@ public class VendingMachineFactory {
             type[i] = pieces[3];
             stock[i] = 5;
         }
-        for (int i = 0; i < inventoryList.size(); i++) {
-            if (stock[i] == 0) {
-                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
-            } else {
-                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
-            }
+//        for (int i = 0; i < inventoryList.size(); i++) {
+//            if (stock[i] == 0) {
+//                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
+//            } else {
+//                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
+//            }
 
         }
 
-    }
+
 
     public String[] getSlotLocation() {
         return slotLocation;
@@ -76,15 +76,17 @@ public class VendingMachineFactory {
     }
 
     public void DisplayVendingMachineItems() {
-//        for (int i = 0; i < inventoryList.size(); i++) {
-//            if (stock[i] == 0) {
-//                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
-//            } else {
-//                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
-//            }
+        for (int i = 0; i < inventoryList.size(); i++) {
+            if (getStock()[i] == 0) {
+                System.out.println(getSlotLocation()[i] + " " + getProductName()[i] + " is SOLD OUT.");
+            } else {
+                System.out.println(getSlotLocation()[i] + "  " + getProductName()[i] + " for $" + getPrice()[i]);
+            }
 
         }
 
+
+    }
     }
 
 

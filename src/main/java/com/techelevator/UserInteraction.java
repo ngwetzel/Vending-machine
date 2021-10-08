@@ -1,5 +1,8 @@
 package com.techelevator;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Scanner;
 
 
@@ -10,6 +13,7 @@ public class UserInteraction {
     private String mainMenuChoice;
     private String paymentMenuChoice;
     private String productSelection;
+
 
 
     public void mainMenuPrint() {
@@ -26,7 +30,7 @@ public class UserInteraction {
         while (!isValidInput) {
             if (this.mainMenuChoice.equals("1")) {
                 isValidInput = true;
-                vendingMachineUX.displayVendingMachineItems(); //Display list of items ----- THIS is causing an error and I can't quite figure out the reason
+                vendingMachineUX.DisplayVendingMachineItems(); //Display list of items ----- THIS is causing an error and I can't quite figure out the reason
                 System.out.println("INSERT DISPLAY HERE"); //Temporary
                 mainMenuPrint(); //Return to main menu screen
             } else if (mainMenuChoice.equals("2")) {
@@ -100,6 +104,24 @@ public class UserInteraction {
 
         System.out.println("Please select a product based on its slot location: ");
         productSelection = keyboard.nextLine();
+        int newBalance = 0;
+        try(FileWriter forLog = new FileWriter("Log.txt");
+            PrintWriter log = new PrintWriter(forLog)) {
+        int index = 0;
+        for (int i = 0; i < vendingMachineUX.getSlotLocation().length; i++) {
+            if (productSelection.equals(vendingMachineUX.getSlotLocation()[i])) {
+                index = i;
+                // remove cost vendingMachineUX.getPrice()[index] from balance.
+                // vendingMachineUX.stock()[index]--;
+                // newBalance = balance - vendingMachineUX.getPrice()[index]
+                // log.append(date/time + " " + vendingMachineUX.getProductName()[index] + " " + vendingMachineUX.getSlotLocation()[index] + " / " + balance + " / " + newBalance
+                //balance = newBalance;
+
+            }
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
         int indexNumber;
 //
 //        for (int i = 0; i < vendingMachineUX.getSlotLocation(); i++) {
@@ -116,8 +138,8 @@ public class UserInteraction {
 
     }
 
-    public String changeMaker(double remainingBalance) {
-        String changeInCoins = "";
+    public void changeMaker(double remainingBalance) {
+
         double forInt = remainingBalance * 100;
         String isInt = "" + remainingBalance + "";
         int forChange = Integer.parseInt(isInt);
@@ -127,7 +149,7 @@ public class UserInteraction {
         int pennies = 0;
 
         if (forChange == 0) {
-            changeInCoins = "0";
+            System.out.println("You have a remaining balance of 0.");
         } else if ((forChange / 25) > 1) {
             quarters = (forChange / 25);
             forChange = forChange - (quarters * 25);
@@ -155,7 +177,7 @@ public class UserInteraction {
 
         //Something taking in the remaining balance and determining how much it will be in coins
         balance = 0; //balance reset to 0 at this point
-        return changeInCoins;
+
     }
 
 }

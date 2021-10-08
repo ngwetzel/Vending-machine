@@ -42,11 +42,18 @@ public class VendingMachineFactory {
             this.stock[i] = 5;
         }
 
+//        for (int i = 0; i < inventoryList.size(); i++) {
+//            if (stock[i] == 0) {
+//                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
+//            } else {
+//                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
+//            }
+
     }
 
     public void fileDeconstruction() {
 
-    }
+
 
 
     public String[] getSlotLocation() {
@@ -69,15 +76,20 @@ public class VendingMachineFactory {
         return stock;
     }
 
-    public void displayVendingMachineItems() {
-        for (int i = 0; i < slotLocation.length; i++) {
-            if (stock[i] == 0) {
-                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
+
+    public void DisplayVendingMachineItems() {
+        for (int i = 0; i < inventoryList.size(); i++) {
+            if (getStock()[i] == 0) {
+                System.out.println(getSlotLocation()[i] + " " + getProductName()[i] + " is SOLD OUT.");
             } else {
-                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
+                System.out.println(getSlotLocation()[i] + "  " + getProductName()[i] + " for $" + getPrice()[i]);
             }
 
         }
+
+
+    }
+
     }
 }
 

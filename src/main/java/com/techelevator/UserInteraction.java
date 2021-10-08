@@ -26,7 +26,7 @@ public class UserInteraction {
         while (!isValidInput) {
             if (this.mainMenuChoice.equals("1")) {
                 isValidInput = true;
-//                vendingMachineUX.DisplayVendingMachineItems(); //Display list of items ----- THIS is causing an error and I can't quite figure out the reason
+                vendingMachineUX.fileDeconstruction(); //Display list of items ----- THIS is causing an error and I can't quite figure out the reason
                 System.out.println("INSERT DISPLAY HERE"); //Temporary
                 mainMenuPrint(); //Return to main menu screen
             } else if (mainMenuChoice.equals("2")) {
@@ -116,6 +116,40 @@ public class UserInteraction {
 
     public String changeMaker(double remainingBalance) {
         String changeInCoins = "";
+        double forInt = remainingBalance * 100;
+        String isInt = "" + remainingBalance + "";
+        int forChange = Integer.parseInt(isInt);
+        int quarters = 0;
+        int dimes = 0;
+        int nickels = 0;
+        int pennies = 0;
+
+        if (forChange == 0) {
+            changeInCoins = "0";
+        } else if ((forChange / 25) > 1) {
+            quarters = (forChange / 25);
+            forChange = forChange - (quarters * 25);
+        } else if ((forChange / 10) > 1) {
+            dimes = (forChange / 10);
+            forChange = forChange - (dimes * 10);
+        } else if ((forChange / 5) > 1) {
+            nickels = forChange / 5;
+            forChange = forChange - (nickels * 5);
+        } else if (forChange > 0) {
+            pennies = forChange;
+        }
+        System.out.print("Your change is ");
+        if (quarters > 0) {
+            System.out.print(quarters + "quarters, ");
+        } else if (dimes > 0) {
+            System.out.print(dimes + "dimes, ");
+        } else if (nickels > 0) {
+            System.out.print(nickels + "nickels, ");
+        } else if (pennies > 0) {
+            System.out.println(pennies + "pennies.");
+        }
+        System.out.println("For " + remainingBalance + ".");
+
 
         //Something taking in the remaining balance and determining how much it will be in coins
         balance = 0; //balance reset to 0 at this point

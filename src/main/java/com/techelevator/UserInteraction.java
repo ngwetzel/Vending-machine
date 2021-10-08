@@ -26,7 +26,7 @@ public class UserInteraction {
         while (!isValidInput) {
             if (this.mainMenuChoice.equals("1")) {
                 isValidInput = true;
-                vendingMachineUX.fileDeconstruction(); //Display list of items ----- THIS is causing an error and I can't quite figure out the reason
+                vendingMachineUX.displayVendingMachineItems(); //Display list of items ----- THIS is causing an error and I can't quite figure out the reason
                 System.out.println("INSERT DISPLAY HERE"); //Temporary
                 mainMenuPrint(); //Return to main menu screen
             } else if (mainMenuChoice.equals("2")) {
@@ -96,13 +96,15 @@ public class UserInteraction {
     }
 
     public void selectProduct() {
-        vendingMachineUX.DisplayVendingMachineItems(); //It's weird because this doesn't cause an error, but also doesn't print
+        vendingMachineUX.displayVendingMachineItems(); //It's weird because this doesn't cause an error, but also doesn't print
 
         System.out.println("Please select a product based on its slot location: ");
         productSelection = keyboard.nextLine();
         int indexNumber;
 //
 //        for (int i = 0; i < vendingMachineUX.getSlotLocation(); i++) {
+//            getSlotLocation
+//
 //            if (productSelection.equalsIgnoreCase(slotID)) {
 //                indexNumber = slotID.;
 //

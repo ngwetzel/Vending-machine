@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Scanner;
 
 public class VendingMachineFactory {
-    private File vendingMachineFile = new File("vendingmachine.csv"); //eager instantiation
+    private static File vendingMachineFile = new File("vendingmachine.csv"); //eager instantiation
     private List<String> inventoryList = new ArrayList<>();
     private String[] slotLocation;
     private String[] productName;
@@ -26,9 +26,6 @@ public class VendingMachineFactory {
             System.err.println("File not found. Please try again.");
         }
 
-    }
-
-    public void fileDeconstruction() {
         slotLocation = new String[inventoryList.size()];
         productName = new String[inventoryList.size()];
         price = new String[inventoryList.size()];
@@ -38,22 +35,19 @@ public class VendingMachineFactory {
 
         for (int i = 0; i < inventoryList.size(); i++) {
             String[] pieces = inventoryList.get(i).split("\\|");
-            slotLocation[i] = pieces[0];
-            productName[i] = pieces[1];
-            price[i] = pieces[2];
-            type[i] = pieces[3];
-            stock[i] = 5;
-        }
-        for (int i = 0; i < inventoryList.size(); i++) {
-            if (stock[i] == 0) {
-                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
-            } else {
-                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
-            }
-
+            this.slotLocation[i] = pieces[0];
+            this.productName[i] = pieces[1];
+            this.price[i] = pieces[2];
+            this.type[i] = pieces[3];
+            this.stock[i] = 5;
         }
 
     }
+
+    public void fileDeconstruction() {
+
+    }
+
 
     public String[] getSlotLocation() {
         return slotLocation;
@@ -75,17 +69,19 @@ public class VendingMachineFactory {
         return stock;
     }
 
-    public void DisplayVendingMachineItems() {
-//        for (int i = 0; i < inventoryList.size(); i++) {
-//            if (stock[i] == 0) {
-//                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
-//            } else {
-//                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
-//            }
+    public void displayVendingMachineItems() {
+        for (int i = 0; i < slotLocation.length; i++) {
+            if (stock[i] == 0) {
+                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
+            } else {
+                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
+            }
 
         }
-
     }
+}
+
+
 
 
 

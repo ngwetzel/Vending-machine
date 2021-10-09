@@ -18,7 +18,7 @@ public class UserInteraction {
     DecimalFormat newFormat = new DecimalFormat("#.00");
     private double balance;
 
-    public String mainMenuPrint() {
+    public void mainMenuPrint() {
         System.out.println("\nPlease make your selection. (1, 2, or 3)\n" +
                 "1. Display Vending Machine Items\n" +
                 "2. Purchase\n" +

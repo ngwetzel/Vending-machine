@@ -102,7 +102,7 @@ public class UserInteraction {
         //Logs to file
         try (FileWriter forLog = new FileWriter("Log.txt", true);
              PrintWriter log = new PrintWriter(forLog)) {
-            log.append(currentDate + " FEED MONEY " + " \\ " + newFormat.format(balance) + " \\ " + newFormat.format(newBalance) + ".").println();
+            log.append(currentDate + " FEED MONEY " + " \\" + newFormat.format(balance) + " \\" + newFormat.format(newBalance) + ".").println();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -145,34 +145,33 @@ public class UserInteraction {
                 } else if (vendingMachineUX.getType()[index].equals("Gum")) {
                     System.out.println("Chew Chew, Yum!");
                 }
-                break;
 
+
+                try(FileWriter forLog = new FileWriter("Log.txt", true);
+                    PrintWriter log = new PrintWriter(forLog)) {
+                    //Logs a Get Product action in the Log.txt
+                    log.append(currentDate + " " + vendingMachineUX.getProductName()[index] + " " +
+                            vendingMachineUX.getSlotLocation()[index] +
+                            " \\" + newFormat.format(balance) + " \\" + newFormat.format(newBalance)).println();
+
+                    //Sets total balance to equal new balance after logged
+                    balance = newBalance;
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                break;
             } else if (!productSelection.equals(vendingMachineUX.getSlotLocation()[i]) && (i == vendingMachineUX.getSlotLocation().length - 1)) {
                 System.err.println("Invalid slot location. Please try again with a valid slot location.");
                 break;
             }
         }
-
-        try (FileWriter forLog = new FileWriter("Log.txt", true);
-             PrintWriter log = new PrintWriter(forLog)) {
-            //Logs a Get Product action in the Log.txt
-            log.append(currentDate + " " + vendingMachineUX.getProductName()[index] + " " +
-                    vendingMachineUX.getSlotLocation()[index] +
-                    " \\ " + newFormat.format(balance) + " \\ " + newFormat.format(newBalance)).println();
-
-            //Sets total balance to equal new balance after logged
-            balance = newBalance;
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-
         paymentMenuPrint();
     }
 
     public void changeMaker(double remainingBalance) {
-        double precision = Math.round(remainingBalance * 100) / 100;
-        double forInt = precision * 100;
-        int forChange = ((int) forInt);
+        double forInt = remainingBalance * 100;
+        double forIntPrecision = Math.round(forInt);
+        int forChange = ((int) forIntPrecision);
         int quarters = 0;
         int dimes = 0;
         int nickels = 0;
@@ -192,7 +191,7 @@ public class UserInteraction {
             forChange = forChange - (dimes * 10);
         }
         if ((forChange / 5) >= 1) {
-            nickels = (forChange / 5);
+            nickels = forChange / 5;
             forChange = forChange - (nickels * 5);
         }
         if (forChange >= 0) {
@@ -228,6 +227,7 @@ public class UserInteraction {
         }
 
         this.balance = 0; //balance reset to 0 at end of transaction
+
     }
 
     public String getMainMenuChoice() {

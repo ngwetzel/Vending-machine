@@ -2,6 +2,7 @@ package com.techelevator;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -11,9 +12,10 @@ public class VendingMachineFactory {
     private List<String> inventoryList = new ArrayList<>();
     private String[] slotLocation;
     private String[] productName;
-    private String[] price;
+    private Double[] price;
     private String[] type;
     private int[] stock;
+    DecimalFormat newFormat = new DecimalFormat("#.00");
 
     public VendingMachineFactory() {
         try (Scanner dataInput = new Scanner(vendingMachineFile)) {
@@ -28,7 +30,7 @@ public class VendingMachineFactory {
 
         slotLocation = new String[inventoryList.size()];
         productName = new String[inventoryList.size()];
-        price = new String[inventoryList.size()];
+        price = new Double[inventoryList.size()];
         type = new String[inventoryList.size()];
         stock = new int[inventoryList.size()];
 
@@ -37,24 +39,11 @@ public class VendingMachineFactory {
             String[] pieces = inventoryList.get(i).split("\\|");
             this.slotLocation[i] = pieces[0];
             this.productName[i] = pieces[1];
-            this.price[i] = pieces[2];
+            this.price[i] = Double.parseDouble(pieces[2]);
             this.type[i] = pieces[3];
             this.stock[i] = 5;
         }
-
-//        for (int i = 0; i < inventoryList.size(); i++) {
-//            if (stock[i] == 0) {
-//                System.out.println(slotLocation[i] + " " + productName[i] + " is SOLD OUT.");
-//            } else {
-//                System.out.println(slotLocation[i] + "  " + productName[i] + " for $" + price[i]);
-//            }
-
     }
-
-    public void fileDeconstruction() {
-
-
-
 
     public String[] getSlotLocation() {
         return slotLocation;
@@ -64,7 +53,7 @@ public class VendingMachineFactory {
         return productName;
     }
 
-    public String[] getPrice() {
+    public Double[] getPrice() {
         return price;
     }
 
@@ -77,21 +66,23 @@ public class VendingMachineFactory {
     }
 
 
-    public void DisplayVendingMachineItems() {
+    public void displayVendingMachineItems() {
+        String productDisplay = "";
         for (int i = 0; i < inventoryList.size(); i++) {
             if (getStock()[i] == 0) {
-                System.out.println(getSlotLocation()[i] + " " + getProductName()[i] + " is SOLD OUT.");
+                productDisplay = slotLocation[i] + " " + productName[i] + " is SOLD OUT.";
+                System.out.println(productDisplay);
             } else {
-                System.out.println(getSlotLocation()[i] + "  " + getProductName()[i] + " for $" + getPrice()[i]);
+                productDisplay =  slotLocation[i] + " " + productName[i] + " for $" + newFormat.format(price[i]);
+                System.out.println(productDisplay);
             }
 
         }
 
-
     }
 
-    }
 }
+
 
 
 

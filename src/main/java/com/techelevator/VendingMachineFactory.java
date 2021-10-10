@@ -8,8 +8,8 @@ import java.util.List;
 import java.util.Scanner;
 
 public class VendingMachineFactory {
-    private static File vendingMachineFile = new File("vendingmachine.csv"); //eager instantiation
-    private List<String> inventoryList = new ArrayList<>();
+    private File vendingMachineFile;
+    private List<String> inventoryList;
     private String[] slotLocation;
     private String[] productName;
     private Double[] price;
@@ -17,7 +17,10 @@ public class VendingMachineFactory {
     private int[] stock;
     DecimalFormat newFormat = new DecimalFormat("#.00");
 
-    public VendingMachineFactory() {
+    public VendingMachineFactory(String fileName) {
+        vendingMachineFile = new File(fileName);
+        inventoryList = new ArrayList<>();
+
         try (Scanner dataInput = new Scanner(vendingMachineFile)) {
 
             while (dataInput.hasNextLine()) {
@@ -28,21 +31,49 @@ public class VendingMachineFactory {
             System.err.println("File not found. Please try again.");
         }
 
-        slotLocation = new String[inventoryList.size()];
-        productName = new String[inventoryList.size()];
-        price = new Double[inventoryList.size()];
-        type = new String[inventoryList.size()];
-        stock = new int[inventoryList.size()];
+
+    }
+
+    public void inventorySeparator() {
+        this.slotLocation = new String[inventoryList.size()];
+        this.productName = new String[inventoryList.size()];
+        this.price = new Double[inventoryList.size()];
+        this.type = new String[inventoryList.size()];
+        this.stock = new int[inventoryList.size()];
 
 
         for (int i = 0; i < inventoryList.size(); i++) {
             String[] pieces = inventoryList.get(i).split("\\|");
-            this.slotLocation[i] = pieces[0];
-            this.productName[i] = pieces[1];
-            this.price[i] = Double.parseDouble(pieces[2]);
-            this.type[i] = pieces[3];
-            this.stock[i] = 5;
+            slotLocation[i] = pieces[0];
+            productName[i] = pieces[1];
+            price[i] = Double.parseDouble(pieces[2]);
+            type[i] = pieces[3];
+            stock[i] = 5;
         }
+    }
+
+
+    public void displayVendingMachineItems() {
+        String productDisplay = "";
+        for (int i = 0; i < inventoryList.size(); i++) {
+            if (getStock()[i] == 0) {
+                productDisplay = slotLocation[i] + " " + productName[i] + " is SOLD OUT.";
+                System.out.println(productDisplay);
+            } else {
+                productDisplay =  slotLocation[i] + " " + productName[i] + " for $" + newFormat.format(price[i]);
+                System.out.println(productDisplay);
+            }
+
+        }
+
+    }
+
+    public File getVendingMachineFile() {
+        return vendingMachineFile;
+    }
+
+    public List<String> getInventoryList() {
+        return inventoryList;
     }
 
     public String[] getSlotLocation() {
@@ -66,20 +97,7 @@ public class VendingMachineFactory {
     }
 
 
-    public void displayVendingMachineItems() {
-        String productDisplay = "";
-        for (int i = 0; i < inventoryList.size(); i++) {
-            if (getStock()[i] == 0) {
-                productDisplay = slotLocation[i] + " " + productName[i] + " is SOLD OUT.";
-                System.out.println(productDisplay);
-            } else {
-                productDisplay =  slotLocation[i] + " " + productName[i] + " for $" + newFormat.format(price[i]);
-                System.out.println(productDisplay);
-            }
 
-        }
-
-    }
 
 }
 

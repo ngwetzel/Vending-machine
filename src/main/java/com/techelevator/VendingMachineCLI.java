@@ -7,10 +7,10 @@ public class VendingMachineCLI {
 
 	public static void main(String[] args) {
 
-		VendingMachineFactory vendingMachine = new VendingMachineFactory();
-		UserInteraction userInteraction = new UserInteraction();
+		VendingMachineFactory vendomatic800 = new VendingMachineFactory("vendingmachine.csv"); //Creating new vending machine
+		UserInteraction userInteraction = new UserInteraction(vendomatic800);
 
-		vendingMachine.displayVendingMachineItems();
+		vendomatic800.displayVendingMachineItems();
 
 		userInteraction.mainMenuPrint();
 		userInteraction.paymentMenuPrint();

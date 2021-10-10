@@ -9,14 +9,21 @@ import java.text.DecimalFormat;
 
 
 public class UserInteraction {
-    private VendingMachineFactory vendingMachineUX = new VendingMachineFactory();
-    private Scanner keyboard = new Scanner(System.in);
+    private VendingMachineFactory vendingMachineUX;
+//    private Scanner keyboard = new Scanner(System.in);
     private String mainMenuChoice;
     private String paymentMenuChoice;
     private String productSelection;
     LocalDateTime currentDate = LocalDateTime.now();
     DecimalFormat newFormat = new DecimalFormat("#.00");
     private double balance;
+    User user;
+
+    public UserInteraction(VendingMachineFactory vendingMachineFactory) {
+        this.vendingMachineUX = vendingMachineFactory;
+        vendingMachineUX.inventorySeparator();
+        this.user = new User();
+    }
 
     public void mainMenuPrint() {
         System.out.println("\nPlease make your selection. (1, 2, or 3)\n" +
@@ -24,7 +31,9 @@ public class UserInteraction {
                 "2. Purchase\n" +
                 "3. Exit\n");
 
-        mainMenuChoice = keyboard.nextLine();
+//        mainMenuChoice = keyboard.nextLine();
+        user.getUserInput();
+        mainMenuChoice = user.getInput();
         mainMenuInteraction(mainMenuChoice);
     }
 
@@ -58,7 +67,9 @@ public class UserInteraction {
                 "3. Finish Transaction\n\n" +
                 "Current balance is: " + newFormat.format(balance) + "\n");
 
-        paymentMenuChoice = keyboard.nextLine();
+
+        user.getUserInput();
+        paymentMenuChoice = user.getInput();
         paymentMenuInteraction(paymentMenuChoice);
     }
 
@@ -85,7 +96,8 @@ public class UserInteraction {
 
     public void feedMoney() {
         System.out.println("How much money would you like to add?");
-        String feed = keyboard.nextLine();
+        user.getUserInput();
+        String feed = user.getInput();
         double newBalance = 0.0;
         try {
             if (Integer.parseInt(feed) > 0) {
@@ -115,7 +127,8 @@ public class UserInteraction {
         vendingMachineUX.displayVendingMachineItems();
 
         System.out.println("Please select a product based on its slot location: ");
-        productSelection = keyboard.nextLine();
+        user.getUserInput();
+        productSelection = user.getInput();
         double newBalance = 0;
         int index = 0;
 
@@ -168,7 +181,7 @@ public class UserInteraction {
         paymentMenuPrint();
     }
 
-    public void changeMaker(double remainingBalance) {
+    public String changeMaker(double remainingBalance) {
         double forInt = remainingBalance * 100;
         double forIntPrecision = Math.round(forInt);
         int forChange = ((int) forIntPrecision);
@@ -176,10 +189,11 @@ public class UserInteraction {
         int dimes = 0;
         int nickels = 0;
         int pennies = 0;
+        String output = "";
 
         //Determines number of coins to be given
         if (forChange == 0) {
-            System.out.println("You have a remaining balance of 0.");
+            output = "You have a remaining balance of 0.";
         }
 
         if ((forChange / 25) >= 1) {
@@ -199,21 +213,21 @@ public class UserInteraction {
         }
 
         //Prints our respect
-        System.out.print("Your change is ");
+        output = "Your change is ";
         if (quarters > 0) {
-            System.out.print(quarters + " quarter(s) ");
+            output += quarters + " quarter(s) ";
         }
         if (dimes > 0) {
-            System.out.print(dimes + " dime(s) ");
+            output += dimes + " dime(s) ";
         }
         if (nickels > 0) {
-            System.out.print(nickels + " nickel(s) ");
+            output += nickels + " nickel(s) ";
         }
         if (pennies > 0) {
-            System.out.println(pennies + " pennie(s) ");
+            output += pennies + " pennie(s) ";
         }
 
-        System.out.println("for $" + newFormat.format(remainingBalance) + ".");
+        output += "for $" + newFormat.format(remainingBalance) + ".";
 
         //Logs to file
         try (FileWriter forLog = new FileWriter("Log.txt", true);
@@ -226,8 +240,13 @@ public class UserInteraction {
             e.printStackTrace();
         }
 
-        this.balance = 0; //balance reset to 0 at end of transaction
+        resetBalance();
+        System.out.println(output);
+        return output;
+    }
 
+    public void resetBalance(){
+        this.balance = 0;
     }
 
     public String getMainMenuChoice() {

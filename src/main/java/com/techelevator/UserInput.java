@@ -2,11 +2,11 @@ package com.techelevator;
 
 import java.util.Scanner;
 
-public class User {
+public class UserInput {
     private String input;
     private Scanner keyboard;
 
-    public User() {
+    public UserInput() {
         input = "";
         keyboard = new Scanner(System.in);
     }
@@ -18,5 +18,9 @@ public class User {
 
     public String getInput() {
         return input;
+    }
+
+    public void setInput(String input) {
+        this.input = input;
     }
 }

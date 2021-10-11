@@ -1,21 +1,19 @@
 package com.techelevator;
 
-import java.io.File;
-
 // Vending Machine Command Line Interface application
 public class VendingMachineCLI {
 
 	public static void main(String[] args) {
 
-		VendingMachineFactory vendomatic800 = new VendingMachineFactory("vendingmachine.csv"); //Creating new vending machine
-		UserInteraction userInteraction = new UserInteraction(vendomatic800);
+		VendingMachine vendomatic800 = new VendingMachine("vendingmachine.csv"); //Creating new vending machine
 
-		vendomatic800.displayVendingMachineItems();
+		System.out.println("Welcome to the Vendo-Matic 800!");
 
-		userInteraction.mainMenuPrint();
-		userInteraction.paymentMenuPrint();
+		vendomatic800.getUserInterface().getMainMenu(); //Accesses main menu
 
-		}
+		System.out.println("Thank you for using the Vendo-Matic 800. Please vend with us again soon!");
+
 	}
+}
 
 

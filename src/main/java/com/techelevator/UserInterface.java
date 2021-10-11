@@ -51,8 +51,9 @@ public class UserInterface {
                 //Takes user to the payment menu
             } else if (mainMenuChoice.equals("3")) {
                 isValidInput = true;
-                return;
-                //Stops method completely and returns to main method
+                System.out.println("Thank you for using the Vendo-Matic 800. Please vend with us again soon!");
+                System.exit(0);
+                //Thanks the user and exits the program
             } else {
                 isValidInput = false;
                 System.err.println("Input invalid. Please try again.");

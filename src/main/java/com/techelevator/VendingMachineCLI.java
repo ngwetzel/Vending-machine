@@ -11,7 +11,9 @@ public class VendingMachineCLI {
 
 		vendomatic800.getUserInterface().getMainMenu(); //Accesses main menu
 
-		System.out.println("Thank you for using the Vendo-Matic 800. Please vend with us again soon!");
+		//Program ends when user
+
+
 
 	}
 }
